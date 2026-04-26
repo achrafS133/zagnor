@@ -1,73 +1,91 @@
-# React + TypeScript + Vite
+# 🌌 Zagnor Nexus
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Zagnor Nexus** is an immersive **3D Data Visualization Command Center**. It transforms traditional flat dashboards into a dynamic, intergalactic 3D environment, specifically designed to visualize Big Data architectures like Cassandra clusters. Built with React, Three.js (React Three Fiber), and a sleek Glassmorphism design system.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📸 Sneak Peek
 
-## React Compiler
+### Nexus Core & Topology
+![Zagnor Nexus Core](public/screenshots/zagnor_after_click_1777206348114.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Glowing Keyspaces & Interactive Metrics
+![Zagnor Keyspaces](public/screenshots/zagnor_initial_view_1777206331801.png)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+*   **🌌 3D WebGL Topology**: Visualize your clusters, keyspaces, and tables as interactive geometric nodes floating in space.
+*   **📡 Status-Based Visuals**: Immediate visual feedback on node health (Healthy/Warning/Critical) through color-coded neon glowing effects.
+*   **🖱️ Immersive Interactivity**: Hover and click on nodes to reveal deep metric details (Latency, Throughput, Storage, Replicas).
+*   **✨ Ambient VFX**: Features a floating particle field, curved neon connection lines, pulsing opacities, and a starry backdrop.
+*   **📊 Glassmorphism HUD**: A high-end overlay containing live-updating statistics, real-time clocks, and navigation controls.
+*   **📹 Auto-Rotating Orbit Controls**: Smooth camera panning, zooming, and automated rotation.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🛠️ Tech Stack
+
+*   **Frontend**: React (with TypeScript)
+*   **Build Tool**: Vite
+*   **3D Engine**: Three.js integrated via `@react-three/fiber`
+*   **3D Helpers**: `@react-three/drei` (OrbitControls, Text, Stars, Billboard)
+*   **Styling**: Vanilla CSS (CSS Variables, Glassmorphism)
+
+---
+
+## ⚙️ Quick Start
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/achrafS133/zagnor.git
+cd zagnor
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 2. Install dependencies
+```bash
+npm install
 ```
+
+### 3. Start the development server
+```bash
+npm run dev
+```
+
+Your command center will be online at [http://localhost:5173/](http://localhost:5173/).
+
+---
+
+## 🏗️ Project Architecture
+
+```text
+zagnor/
+├── public/                 # Static assets and screenshots
+├── src/
+│   ├── components/
+│   │   ├── NexusScene.tsx      # Main 3D Canvas
+│   │   ├── DataNodeMesh.tsx    # Interactive node with glowing effects
+│   │   ├── ConnectionLines.tsx # Curved neon data links
+│   │   ├── ParticleField.tsx   # Ambient space particles
+│   │   └── HUD.tsx             # Overlay UI (Metrics, Details panel)
+│   ├── data/
+│   │   └── mockData.ts         # Mock Cassandra cluster metrics
+│   ├── App.tsx                 # Root application
+│   └── index.css               # Global Design System & Variables
+└── .agents/workflows/
+    └── zagnor-dev.md           # Development workflows
+```
+
+---
+
+## 🔮 Future Roadmap
+
+*   **Backend Integration**: Connect a Laravel API to fetch live metrics directly from a Cassandra cluster.
+*   **Real-Time Data Streams**: Utilize WebSockets to push live ops/s and latency changes to the UI.
+*   **WebXR Support**: Full VR immersion with WebXR allowing users to step inside the data.
+*   **Query Interface**: Execute CQL queries straight from the 3D HUD.
+
+---
+
+**Developed with 💙 using React & Three.js**
