@@ -1,10 +1,10 @@
-# 🌌 Zagnor Nexus
+# Zagnor Nexus
 
 **Zagnor Nexus** is an immersive **3D Data Visualization Command Center**. It transforms traditional flat dashboards into a dynamic, intergalactic 3D environment, specifically designed to visualize Big Data architectures like Cassandra clusters. Built with React, Three.js (React Three Fiber), and a sleek Glassmorphism design system.
 
 ---
 
-## 📸 Sneak Peek
+## Sneak Peek
 
 ### Nexus Core & Topology
 ![Zagnor Nexus Core](public/screenshots/zagnor_after_click_1777206348114.png)
@@ -14,18 +14,18 @@
 
 ---
 
-## 🚀 Features
+## Features
 
-*   **🌌 3D WebGL Topology**: Visualize your clusters, keyspaces, and tables as interactive geometric nodes floating in space.
-*   **📡 Status-Based Visuals**: Immediate visual feedback on node health (Healthy/Warning/Critical) through color-coded neon glowing effects.
-*   **🖱️ Immersive Interactivity**: Hover and click on nodes to reveal deep metric details (Latency, Throughput, Storage, Replicas).
-*   **✨ Ambient VFX**: Features a floating particle field, curved neon connection lines, pulsing opacities, and a starry backdrop.
-*   **📊 Glassmorphism HUD**: A high-end overlay containing live-updating statistics, real-time clocks, and navigation controls.
-*   **📹 Auto-Rotating Orbit Controls**: Smooth camera panning, zooming, and automated rotation.
+*   **3D WebGL Topology**: Visualize your clusters, keyspaces, and tables as interactive geometric nodes floating in space.
+*   **Status-Based Visuals**: Immediate visual feedback on node health (Healthy/Warning/Critical) through color-coded neon glowing effects.
+*   **Immersive Interactivity**: Hover and click on nodes to reveal deep metric details (Latency, Throughput, Storage, Replicas).
+*   **Ambient VFX**: Features a floating particle field, curved neon connection lines, pulsing opacities, and a starry backdrop.
+*   **Glassmorphism HUD**: A high-end overlay containing live-updating statistics, real-time clocks, and navigation controls.
+*   **Auto-Rotating Orbit Controls**: Smooth camera panning, zooming, and automated rotation.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 *   **Frontend**: React (with TypeScript)
 *   **Build Tool**: Vite
@@ -35,7 +35,7 @@
 
 ---
 
-## ⚙️ Quick Start
+## Quick Start
 
 ### 1. Clone the repository
 ```bash
@@ -57,7 +57,7 @@ Your command center will be online at [http://localhost:5173/](http://localhost:
 
 ---
 
-## 🏗️ Project Architecture
+## Project Architecture
 
 ```text
 zagnor/
@@ -79,7 +79,7 @@ zagnor/
 
 ---
 
-## 🔮 Future Roadmap
+## Future Roadmap
 
 *   **Backend Integration**: Connect a Laravel API to fetch live metrics directly from a Cassandra cluster.
 *   **Real-Time Data Streams**: Utilize WebSockets to push live ops/s and latency changes to the UI.
@@ -88,4 +88,4 @@ zagnor/
 
 ---
 
-**Developed with 💙 using React & Three.js**
+**Developed with love using React & Three.js**
