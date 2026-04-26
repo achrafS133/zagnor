@@ -3,16 +3,17 @@ import { OrbitControls, Environment, Stars } from '@react-three/drei';
 import DataNodeMesh from './DataNodeMesh';
 import ConnectionLines from './ConnectionLines';
 import ParticleField from './ParticleField';
-import { mockNodes, type DataNode } from '../data/mockData';
+import type { DataNode } from '../data/mockData';
 
 interface Props {
+  nodes: DataNode[];
   selectedNode: DataNode | null;
   hoveredNode: DataNode | null;
   onSelectNode: (node: DataNode | null) => void;
   onHoverNode: (node: DataNode | null) => void;
 }
 
-export default function NexusScene({ selectedNode, hoveredNode, onSelectNode, onHoverNode }: Props) {
+export default function NexusScene({ nodes, selectedNode, hoveredNode, onSelectNode, onHoverNode }: Props) {
   return (
     <Canvas
       camera={{ position: [8, 5, 10], fov: 50, near: 0.1, far: 100 }}
@@ -33,9 +34,9 @@ export default function NexusScene({ selectedNode, hoveredNode, onSelectNode, on
       <Stars radius={50} depth={80} count={2000} factor={3} saturation={0.2} fade speed={0.5} />
 
       {/* Data visualization */}
-      <ConnectionLines nodes={mockNodes} />
+      <ConnectionLines nodes={nodes} />
 
-      {mockNodes.map((node) => (
+      {nodes.map((node) => (
         <DataNodeMesh
           key={node.id}
           node={node}

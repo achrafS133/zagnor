@@ -13,7 +13,7 @@ export interface DataNode {
   connections: string[];
 }
 
-export const mockNodes: DataNode[] = [
+export const defaultNodes: DataNode[] = [
   {
     id: 'core-1',
     name: 'Nexus Core',
@@ -97,9 +97,60 @@ export const mockNodes: DataNode[] = [
   },
 ];
 
-export const globalMetrics = {
-  totalNodes: 9,
-  totalThroughput: 101_900,
-  avgLatency: 10.4,
-  uptime: 99.97,
+export const enterpriseNodes: DataNode[] = [
+  {
+    id: 'ent-core',
+    name: 'Global Mesh',
+    type: 'cluster',
+    status: 'healthy',
+    position: [0, 0, 0],
+    metrics: { latency: 1.2, throughput: 85000, storage: '12.8 TB', replicas: 5 },
+    connections: ['ks-fin', 'ks-ops', 'ks-dev'],
+  },
+  {
+    id: 'ks-fin',
+    name: 'Finance DB',
+    type: 'keyspace',
+    status: 'healthy',
+    position: [4, 1, 0],
+    metrics: { latency: 0.8, throughput: 42000, storage: '4.2 TB', replicas: 5 },
+    connections: ['tbl-trans', 'tbl-tax'],
+  },
+  {
+    id: 'ks-ops',
+    name: 'Operations DB',
+    type: 'keyspace',
+    status: 'healthy',
+    position: [-4, 1, 0],
+    metrics: { latency: 2.1, throughput: 31000, storage: '3.1 TB', replicas: 3 },
+    connections: ['tbl-ship', 'tbl-inv'],
+  },
+  {
+    id: 'ks-dev',
+    name: 'Development DB',
+    type: 'keyspace',
+    status: 'warning',
+    position: [0, -4, 0],
+    metrics: { latency: 15.4, throughput: 12000, storage: '5.5 TB', replicas: 2 },
+    connections: ['tbl-ci', 'tbl-tests'],
+  },
+  { id: 'tbl-trans', name: 'transactions', type: 'table', status: 'healthy', position: [6, 2, 1], metrics: { latency: 0.4, throughput: 28000, storage: '2.1 TB', replicas: 5 }, connections: [] },
+  { id: 'tbl-tax', name: 'tax_records', type: 'table', status: 'healthy', position: [6, 0, -1], metrics: { latency: 1.2, throughput: 14000, storage: '2.1 TB', replicas: 3 }, connections: [] },
+  { id: 'tbl-ship', name: 'shipping_logs', type: 'table', status: 'healthy', position: [-6, 2, 1], metrics: { latency: 4.5, throughput: 18000, storage: '1.5 TB', replicas: 3 }, connections: [] },
+  { id: 'tbl-inv', name: 'inventory_track', type: 'table', status: 'healthy', position: [-6, 0, -1], metrics: { latency: 2.2, throughput: 13000, storage: '1.6 TB', replicas: 3 }, connections: [] },
+  { id: 'tbl-ci', name: 'ci_builds', type: 'table', status: 'warning', position: [1, -6, 1], metrics: { latency: 22.1, throughput: 8000, storage: '3.2 TB', replicas: 2 }, connections: [] },
+  { id: 'tbl-tests', name: 'test_coverage', type: 'table', status: 'critical', position: [-1, -6, -1], metrics: { latency: 54.8, throughput: 4000, storage: '2.3 TB', replicas: 1 }, connections: [] },
+];
+
+export const getGlobalMetrics = (nodes: DataNode[]) => {
+  const totalThroughput = nodes.reduce((acc, n) => acc + n.metrics.throughput, 0);
+  const avgLatency = nodes.reduce((acc, n) => acc + n.metrics.latency, 0) / nodes.length;
+  const criticalCount = nodes.filter(n => n.status === 'critical').length;
+  
+  return {
+    totalNodes: nodes.length,
+    totalThroughput,
+    avgLatency,
+    uptime: criticalCount > 0 ? 98.42 : 99.98,
+  };
 };

@@ -9,6 +9,9 @@
 ### Nexus Core & Topology
 ![Zagnor Nexus Core](public/screenshots/zagnor_after_click_1777206348114.png)
 
+### Enterprise Mesh Configuration
+![Enterprise Mesh](public/screenshots/zagnor_enterprise_mesh.png)
+
 ### Glowing Keyspaces & Interactive Metrics
 ![Zagnor Keyspaces](public/screenshots/zagnor_initial_view_1777206331801.png)
 

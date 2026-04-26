@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
-import { globalMetrics, type DataNode } from '../data/mockData';
-import { Network, BarChart3, Settings, X, Activity, Cpu, Database, Shield } from 'lucide-react';
+import { defaultNodes, enterpriseNodes, type DataNode } from '../data/mockData';
+import { Network, BarChart3, Settings, X, Activity, Cpu, Database, Shield, LayoutGrid, Globe } from 'lucide-react';
 
 interface Props {
+  nodes: DataNode[];
+  setNodes: (nodes: DataNode[]) => void;
+  globalMetrics: {
+    totalNodes: number;
+    totalThroughput: number;
+    avgLatency: number;
+    uptime: number;
+  };
   selectedNode: DataNode | null;
   onClose: () => void;
 }
@@ -32,7 +40,7 @@ function AnimatedNumber({ value, decimals = 0, suffix = '' }: { value: number; d
   return <>{display.toFixed(decimals)}{suffix}</>;
 }
 
-export default function HUD({ selectedNode, onClose }: Props) {
+export default function HUD({ nodes, setNodes, globalMetrics, selectedNode, onClose }: Props) {
   const [time, setTime] = useState(new Date());
   const [activeView, setActiveView] = useState<'topology' | 'metrics' | 'settings'>('topology');
 
@@ -100,7 +108,7 @@ export default function HUD({ selectedNode, onClose }: Props) {
               <div className="metric-value cyan">
                 <AnimatedNumber value={globalMetrics.totalNodes} />
               </div>
-              <div className="metric-sub">All clusters</div>
+              <div className="metric-sub">Active nodes</div>
             </div>
             <div className="metric-card">
               <div className="metric-label">Throughput</div>
@@ -114,14 +122,14 @@ export default function HUD({ selectedNode, onClose }: Props) {
               <div className="metric-value amber">
                 <AnimatedNumber value={globalMetrics.avgLatency} decimals={1} suffix=" ms" />
               </div>
-              <div className="metric-sub">P50</div>
+              <div className="metric-sub">Network P50</div>
             </div>
             <div className="metric-card">
               <div className="metric-label">Uptime</div>
               <div className="metric-value green">
                 <AnimatedNumber value={globalMetrics.uptime} decimals={2} suffix="%" />
               </div>
-              <div className="metric-sub">Last 30d</div>
+              <div className="metric-sub">System stability</div>
             </div>
           </div>
         )}
@@ -162,11 +170,26 @@ export default function HUD({ selectedNode, onClose }: Props) {
         {activeView === 'settings' && (
           <div className="metrics-row">
             <div className="metric-card" style={{ width: '100%', minWidth: '400px' }}>
-              <div className="metric-label">Environment Settings</div>
-              <div className="flex gap-4 mt-2">
-                <button className="status-pill hover:bg-slate-800 transition-colors">Toggle Night Mode</button>
-                <button className="status-pill hover:bg-slate-800 transition-colors">Reset Camera</button>
-                <button className="status-pill hover:bg-slate-800 transition-colors">Export Logs</button>
+              <div className="metric-label">Topology Configuration</div>
+              <div className="flex gap-4 mt-3">
+                <button 
+                  className={`status-pill transition-all ${nodes === defaultNodes ? 'active border-cyan-500 text-cyan-400' : 'hover:bg-slate-800'}`}
+                  onClick={() => setNodes(defaultNodes)}
+                  style={nodes === defaultNodes ? { borderColor: 'var(--neon-cyan)', color: 'var(--neon-cyan)' } : {}}
+                >
+                  <LayoutGrid size={14} className="inline mr-2" /> Default Cluster
+                </button>
+                <button 
+                  className={`status-pill transition-all ${nodes === enterpriseNodes ? 'active border-cyan-500 text-cyan-400' : 'hover:bg-slate-800'}`}
+                  onClick={() => setNodes(enterpriseNodes)}
+                  style={nodes === enterpriseNodes ? { borderColor: 'var(--neon-cyan)', color: 'var(--neon-cyan)' } : {}}
+                >
+                  <Globe size={14} className="inline mr-2" /> Enterprise Mesh
+                </button>
+              </div>
+              <div className="mt-4 pt-4 border-t border-white/5">
+                <div className="metric-label text-[10px]">Data Source</div>
+                <div className="text-[12px] opacity-60 font-mono">Current: {nodes === defaultNodes ? 'local_mock' : 'enterprise_snapshot'}</div>
               </div>
             </div>
           </div>
