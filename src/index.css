@@ -335,20 +335,20 @@ html, body, #root {
 }
 
 .side-nav-btn:hover {
-  border-color: var(--neon-cyan);
-  color: var(--neon-cyan);
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+  border-color: rgba(0, 240, 255, 0.4);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .side-nav-btn.active {
-  background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(168, 85, 247, 0.15));
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(168, 85, 247, 0.1));
   border-color: var(--neon-cyan);
   color: var(--neon-cyan);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3), inset 0 0 10px rgba(0, 240, 255, 0.1);
 }
 
-.side-nav-btn svg {
-  width: 20px;
-  height: 20px;
+.side-nav-btn.active svg {
+  filter: drop-shadow(0 0 5px var(--neon-cyan));
 }
 
 /* Background mesh gradient */

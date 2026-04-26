@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { globalMetrics, type DataNode } from '../data/mockData';
+import { Network, BarChart3, Settings, X, Activity, Cpu, Database, Shield } from 'lucide-react';
 
 interface Props {
   selectedNode: DataNode | null;
@@ -33,6 +34,7 @@ function AnimatedNumber({ value, decimals = 0, suffix = '' }: { value: number; d
 
 export default function HUD({ selectedNode, onClose }: Props) {
   const [time, setTime] = useState(new Date());
+  const [activeView, setActiveView] = useState<'topology' | 'metrics' | 'settings'>('topology');
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -48,18 +50,14 @@ export default function HUD({ selectedNode, onClose }: Props) {
       <div className="hud-top">
         <div className="hud-logo">
           <div className="hud-logo-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
-              <line x1="12" y1="22" x2="12" y2="15.5" />
-              <polyline points="22 8.5 12 15.5 2 8.5" />
-            </svg>
+            <Activity className="w-5 h-5 text-white" />
           </div>
           <span className="hud-logo-text">Zagnor</span>
         </div>
 
         <div className="hud-status">
           <div className="status-pill">
-            <span className="status-dot" />
+            <div className="status-dot" />
             <span>NEXUS ONLINE</span>
           </div>
           <div className="status-pill">
@@ -70,71 +68,116 @@ export default function HUD({ selectedNode, onClose }: Props) {
 
       {/* ────── Side Nav ────── */}
       <div className="side-nav">
-        <button className="side-nav-btn active" title="Topology View">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="3" />
-            <circle cx="4" cy="4" r="2" />
-            <circle cx="20" cy="4" r="2" />
-            <circle cx="4" cy="20" r="2" />
-            <circle cx="20" cy="20" r="2" />
-            <line x1="6" y1="6" x2="10" y2="10" />
-            <line x1="18" y1="6" x2="14" y2="10" />
-            <line x1="6" y1="18" x2="10" y2="14" />
-            <line x1="18" y1="18" x2="14" y2="14" />
-          </svg>
+        <button 
+          className={`side-nav-btn ${activeView === 'topology' ? 'active' : ''}`} 
+          title="Topology View"
+          onClick={() => setActiveView('topology')}
+        >
+          <Network size={20} />
         </button>
-        <button className="side-nav-btn" title="Metrics">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M18 20V10" /><path d="M12 20V4" /><path d="M6 20v-6" />
-          </svg>
+        <button 
+          className={`side-nav-btn ${activeView === 'metrics' ? 'active' : ''}`} 
+          title="Metrics"
+          onClick={() => setActiveView('metrics')}
+        >
+          <BarChart3 size={20} />
         </button>
-        <button className="side-nav-btn" title="Settings">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="3" />
-            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-          </svg>
+        <button 
+          className={`side-nav-btn ${activeView === 'settings' ? 'active' : ''}`} 
+          title="Settings"
+          onClick={() => setActiveView('settings')}
+        >
+          <Settings size={20} />
         </button>
       </div>
 
-      {/* ────── Bottom Metrics ────── */}
+      {/* ────── View Content ────── */}
       <div className="hud-bottom">
-        <div className="metrics-row">
-          <div className="metric-card">
-            <div className="metric-label">Total Nodes</div>
-            <div className="metric-value cyan">
-              <AnimatedNumber value={globalMetrics.totalNodes} />
+        {activeView === 'topology' && (
+          <div className="metrics-row">
+            <div className="metric-card">
+              <div className="metric-label">Total Nodes</div>
+              <div className="metric-value cyan">
+                <AnimatedNumber value={globalMetrics.totalNodes} />
+              </div>
+              <div className="metric-sub">All clusters</div>
             </div>
-            <div className="metric-sub">All clusters</div>
-          </div>
-          <div className="metric-card">
-            <div className="metric-label">Throughput</div>
-            <div className="metric-value purple">
-              <AnimatedNumber value={globalMetrics.totalThroughput} suffix=" ops/s" />
+            <div className="metric-card">
+              <div className="metric-label">Throughput</div>
+              <div className="metric-value purple">
+                <AnimatedNumber value={globalMetrics.totalThroughput} suffix=" ops/s" />
+              </div>
+              <div className="metric-sub">Aggregated</div>
             </div>
-            <div className="metric-sub">Aggregated</div>
-          </div>
-          <div className="metric-card">
-            <div className="metric-label">Avg Latency</div>
-            <div className="metric-value amber">
-              <AnimatedNumber value={globalMetrics.avgLatency} decimals={1} suffix=" ms" />
+            <div className="metric-card">
+              <div className="metric-label">Avg Latency</div>
+              <div className="metric-value amber">
+                <AnimatedNumber value={globalMetrics.avgLatency} decimals={1} suffix=" ms" />
+              </div>
+              <div className="metric-sub">P50</div>
             </div>
-            <div className="metric-sub">P50</div>
-          </div>
-          <div className="metric-card">
-            <div className="metric-label">Uptime</div>
-            <div className="metric-value green">
-              <AnimatedNumber value={globalMetrics.uptime} decimals={2} suffix="%" />
+            <div className="metric-card">
+              <div className="metric-label">Uptime</div>
+              <div className="metric-value green">
+                <AnimatedNumber value={globalMetrics.uptime} decimals={2} suffix="%" />
+              </div>
+              <div className="metric-sub">Last 30d</div>
             </div>
-            <div className="metric-sub">Last 30d</div>
           </div>
-        </div>
+        )}
+
+        {activeView === 'metrics' && (
+          <div className="metrics-row">
+            <div className="metric-card">
+              <div className="metric-label">CPU Load</div>
+              <div className="metric-value cyan">
+                <AnimatedNumber value={42} suffix="%" />
+              </div>
+              <div className="metric-sub"><Cpu size={10} className="inline mr-1" /> Avg Usage</div>
+            </div>
+            <div className="metric-card">
+              <div className="metric-label">Memory</div>
+              <div className="metric-value purple">
+                <AnimatedNumber value={68} suffix="%" />
+              </div>
+              <div className="metric-sub"><Database size={10} className="inline mr-1" /> 16GB Total</div>
+            </div>
+            <div className="metric-card">
+              <div className="metric-label">Net Traffic</div>
+              <div className="metric-value amber">
+                <AnimatedNumber value={450} suffix=" Mb/s" />
+              </div>
+              <div className="metric-sub">Inbound/Outbound</div>
+            </div>
+            <div className="metric-card">
+              <div className="metric-label">Security</div>
+              <div className="metric-value green">
+                <Shield size={24} />
+              </div>
+              <div className="metric-sub">Protected</div>
+            </div>
+          </div>
+        )}
+
+        {activeView === 'settings' && (
+          <div className="metrics-row">
+            <div className="metric-card" style={{ width: '100%', minWidth: '400px' }}>
+              <div className="metric-label">Environment Settings</div>
+              <div className="flex gap-4 mt-2">
+                <button className="status-pill hover:bg-slate-800 transition-colors">Toggle Night Mode</button>
+                <button className="status-pill hover:bg-slate-800 transition-colors">Reset Camera</button>
+                <button className="status-pill hover:bg-slate-800 transition-colors">Export Logs</button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ────── Detail Panel ────── */}
         {selectedNode && (
           <div className="detail-panel">
             <div className="detail-panel-header">
               <span className="detail-panel-title">{selectedNode.name}</span>
-              <button className="detail-panel-close" onClick={onClose}>✕</button>
+              <button className="detail-panel-close" onClick={onClose}><X size={18} /></button>
             </div>
             <div className="detail-row">
               <span className="detail-key">Type</span>
